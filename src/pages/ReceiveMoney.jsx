@@ -4,6 +4,47 @@ import { FaQrcode } from "react-icons/fa";
 
 function ReceiveMoney() {
 
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  const upiId =
+    `${user?.name?.toLowerCase().replace(/\s+/g, "")}@bigrupee`;
+
+  const handleShare = async () => {
+
+    if (navigator.share) {
+
+      try {
+
+        await navigator.share({
+
+          title: "Big Rupee UPI",
+
+          text: `Pay me using UPI ID: ${upiId}`
+
+        });
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    } else {
+
+      navigator.clipboard.writeText(
+        upiId
+      );
+
+      alert(
+        "UPI ID copied to clipboard"
+      );
+
+    }
+
+  };
+
   return (
 
     <div className="dashboard">
@@ -20,17 +61,23 @@ function ReceiveMoney() {
 
           <div className="qr-box">
 
-            <FaQrcode size={150}/>
+            <FaQrcode size={150} />
 
           </div>
 
           <h3>Your Name</h3>
-          <p>Aryan Shaw</p>
+
+          <p>
+            {user?.name || "User"}
+          </p>
 
           <h4>UPI ID</h4>
-          <p>aryan@bigrupee</p>
 
-          <button>
+          <p>
+            {upiId}
+          </p>
+
+          <button onClick={handleShare}>
             Share QR
           </button>
 
@@ -44,7 +91,8 @@ function ReceiveMoney() {
 
     </div>
 
-  )
+  );
+
 }
 
 export default ReceiveMoney;

@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
-
+import { FaChartBar } from "react-icons/fa";
 function Sidebar() {
   return (
     <div className="sidebar">
@@ -38,7 +38,12 @@ function Sidebar() {
             <FaHistory /> Transactions
           </Link>
         </li>
-
+        <li>
+          <Link to="/insights">
+            <FaChartBar />
+            Insights
+          </Link>
+        </li>
         <li>
           <Link to="/notifications">
             <FaBell /> Notifications

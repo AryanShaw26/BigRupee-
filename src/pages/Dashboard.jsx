@@ -6,70 +6,64 @@ import { FaWallet } from "react-icons/fa";
 import { useContext } from "react";
 import { WalletContext } from "../context/WalletContext";
 
-function Dashboard() {
+import { useNavigate } from "react-router-dom";
 
-  const {
-    balance,
-    transactions
-  } = useContext(WalletContext);
+function Dashboard() {
+  const navigate = useNavigate();
+
+  const { balance, transactions } = useContext(WalletContext);
 
   return (
-
     <div className="dashboard">
-
       <Sidebar />
 
       <div className="main-content">
-
         <Navbar />
 
-        <div className="wallet-card">
+        {/* Wallet Card */}
 
-          <FaWallet size={35}/>
+        <div className="wallet-card">
+          <FaWallet size={35} />
 
           <h2>Wallet Balance</h2>
 
           <h1>₹{balance}</h1>
-
         </div>
 
-        <div className="quick-actions">
+        {/* Quick Actions */}
 
-          <div className="action-card">
+        <div className="quick-actions">
+          <div className="action-card" onClick={() => navigate("/send")}>
             ✈ Send Money
           </div>
 
-          <div className="action-card">
+          <div className="action-card" onClick={() => navigate("/receive")}>
             ↓ Receive Money
           </div>
 
-          <div className="action-card">
-            + Add Money
+          <div className="action-card" onClick={() => navigate("/add-money")}>
+            💰 Add Money
           </div>
 
-          <div className="action-card">
-            □ Scan & Pay
+          <div className="action-card" onClick={() => navigate("/insights")}>
+            📊 Insights
           </div>
-
         </div>
 
-        <h2>Recent Transactions</h2>
+        {/* Recent Transactions */}
 
-        {transactions.map((item)=>(
+        <h2 style={{ marginTop: "40px" }}>Recent Transactions</h2>
 
+        {transactions.map((item) => (
           <TransactionCard
             key={item.id}
             name={item.name}
             amount={item.amount}
             type={item.type}
           />
-
         ))}
-
       </div>
-
     </div>
-
   );
 }
 
